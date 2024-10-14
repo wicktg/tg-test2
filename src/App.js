@@ -15,11 +15,18 @@ const TelegramUserInfo = () => {
 
   useEffect(() => {
     const userData = WebApp.initDataUnsafe?.user;
-    if (userData) {
-      setUser(userData);
-      const joinDate = new Date(userData.created_at * 1000); // assuming UNIX timestamp
+
+    // Debugging logs
+    console.log("User data:", userData);
+
+    if (userData && userData.created_at) {
+      const joinDate = new Date(userData.created_at * 1000); // UNIX timestamp to milliseconds
+      console.log("Join date:", joinDate); // Debugging log for join date
+
       const days = calculateDaysOnTelegram(joinDate);
       setDaysOnTelegram(days);
+    } else {
+      console.error("User data or created_at timestamp is missing");
     }
   }, []);
 
